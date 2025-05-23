@@ -97,6 +97,10 @@
             $('#cpf').mask('000.000.000-00');
             $('#telefone').mask('(00) 00000-0000');
 
+            //Criando uma lista do tipo ArrayList
+            let clientes = [];
+            let contador = 1;
+
             $('#myform').submit(function (event) {
                 event.preventDefault();
 
@@ -104,12 +108,33 @@
                 const cpf = $('#cpf').val();
                 const telefone = $('telefone').val();
 
-                const mensagem = `Dados do usuário:\n\nNome: ${name}\nCPF: ${cpf}\nTelefone: ${telefone}`;
+                const cliente = { id: contador++, nome: name, cpf: cpf, telefone: telefone };
 
-                alert(mensagem);
+                clientes.push(cliente);
+
+                updateTable();
 
                 this.reset();
             });
+
+            function updateTable() {
+                const tbody = $('#tableClient tbody');
+                tbody.empty();
+
+                clientes.forEach(cliente => {
+                    const row = ` 
+                        <tr>
+                            <td>${cliente.id}</td>
+                            <td>${cliente.nome}</td>
+                            <td>${cliente.cpf}</td>
+                            <td>${cliente.telefone}</td>
+                        </tr>
+                        `;
+
+                    tbody.append(row);
+
+                });
+            }
 
         })
     </script>
